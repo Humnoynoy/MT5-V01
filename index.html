@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MetaPulse MT5 — Real-Time Trading Statistics & WebSocket Sync</title>
+    <meta name="description" content="Institutional MetaTrader 5 trading statistics visualization, equity drawdown analytics, and real-time position synchronization via WebSocket." />
+    <meta property="og:title" content="MetaPulse MT5 — Real-Time Trading Statistics & WebSocket Sync" />
+    <meta property="og:description" content="Institutional MetaTrader 5 trading statistics visualization, equity drawdown analytics, and real-time position synchronization via WebSocket." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (function () {
+        try {
+          var currentFetch = window.fetch ? window.fetch.bind(window) : undefined;
+          var patchTarget = function (target) {
+            if (!target) return;
+            var desc = Object.getOwnPropertyDescriptor(target, 'fetch');
+            if (!desc || desc.configurable !== false) {
+              Object.defineProperty(target, 'fetch', {
+                configurable: true,
+                enumerable: true,
+                get: function () {
+                  return currentFetch;
+                },
+                set: function (val) {
+                  if (typeof val === 'function') {
+                    currentFetch = val;
+                  }
+                }
+              });
+            }
+          };
+          patchTarget(Window.prototype);
+          patchTarget(window);
+        } catch (_e) {}
+
+        window.addEventListener(
+          'error',
+          function (event) {
+            var msg = String(event && event.message ? event.message : '');
+            var file = String(event && event.filename ? event.filename : '');
+            if (
+              msg.indexOf('Cannot set property fetch') !== -1 ||
+              file.indexOf('chrome-extension://') === 0
+            ) {
+              event.stopImmediatePropagation();
+              event.preventDefault();
+              return false;
+            }
+          },
+          true
+        );
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="bg-[#0B0F17] text-slate-100 antialiased selection:bg-blue-500/30 selection:text-blue-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

@@ -1,0 +1,6 @@
+{
+  "name": "MetaPulse MT5 — Real-Time Trading Statistics & WebSocket Sync",
+  "description": "Institutional MetaTrader 5 trading statistics visualization, equity drawdown analytics, and real-time position synchronization via WebSocket.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
